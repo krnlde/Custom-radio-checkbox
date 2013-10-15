@@ -17,6 +17,7 @@
 
 /* checkbox */
 .checkbox { background-position: -12px 0 }
+.checkbox.disabled { opacity: .5; }
 .checkbox-checked { background-position: -12px -12px }
 
 /* hide input from view but still visible (ie & opera support) */

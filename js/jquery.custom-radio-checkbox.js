@@ -22,7 +22,9 @@
         var $this = $(this);
         // only trigger if the input is not inside a label
         if (!$this.closest('label')[0]) {
-          $this.prev().trigger('change.crc', [true]);
+          var $input = $this.prev();
+          if ($input.prop('disabled')) return false;
+          $input.trigger('change.crc', [true]);
         }
       },
 
@@ -39,6 +41,10 @@
 
           // fake input
           fakeInputElem = $('<i>').addClass(type + (input.checked ? ' ' + type + checkedSuffix : '')).bind('click.crc', forceChange);
+          if (input.disabled) {
+            fakeInputElem.addClass('disabled');
+          }
+
 
           // insert the fake input after the input
           input.parentNode.insertBefore(fakeInputElem[0], input.nextSibling);
@@ -112,11 +118,11 @@
           if (force) {
             this.checked = !this.checked;
           }
-
           // toggle checked class
-          $(this.nextSibling).toggleClass(chs.type + checkedSuffix);
+          $(this.nextSibling).toggleClass(chs.type + checkedSuffix, this.checked);
         });
       }
+      $(this.nextSibling).toggleClass('disabled', $context.prop('disabled'));
     });
   };
 

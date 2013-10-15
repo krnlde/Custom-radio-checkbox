@@ -16,18 +16,6 @@
       // css class used to hide inputs
       hiddenInputClass = 'rc-hidden',
 
-      // function to force the input change when clicking
-      // on a fake input that is not wrapped by a label tag
-      forceChange = function () {
-        var $this = $(this);
-        // only trigger if the input is not inside a label
-        if (!$this.closest('label')[0]) {
-          var $input = $this.prev();
-          if ($input.prop('disabled')) return false;
-          $input.trigger('change.crc', [true]);
-        }
-      },
-
       // function that inserts the fake input
       insertFakeInput = function (inputs) {
         var type = inputs.type,
@@ -40,7 +28,9 @@
           input = inputs[l];
 
           // fake input
-          fakeInputElem = $('<i>').addClass(type + (input.checked ? ' ' + type + checkedSuffix : '')).bind('click.crc', forceChange);
+          fakeInputElem = $('<i>').addClass(type + (input.checked ? ' ' + type + checkedSuffix : '')).on('click.crc', function () {
+            $(this).prev().click();
+          });
           if (input.disabled) {
             fakeInputElem.addClass('disabled');
           }
@@ -113,11 +103,7 @@
         insertFakeInput(chs);
 
         // bind checkbox change event
-        chs.bind('change.crc', function (e, force) {
-          // force change state
-          if (force) {
-            this.checked = !this.checked;
-          }
+        chs.bind('change.crc', function (e) {
           // toggle checked class
           $(this.nextSibling).toggleClass(chs.type + checkedSuffix, this.checked);
         });

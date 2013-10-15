@@ -81,9 +81,8 @@
       <br>
       <br>
       <p>
-        <label for="checkboxAll">
-          <input type="checkbox" name="Checkbox" id="checkboxAll" value="All" />Check all
-        </label>
+        <input type="checkbox" name="Checkbox" id="checkboxAll" value="All" />
+        <label for="checkboxAll">Check all</label>
       </p>
 
 			<div class="separator"></div>
@@ -104,11 +103,27 @@
 
 <script>
   jQuery(function ($) {
-    $('#checkboxAll').change(function () {
-      $(':checkbox:not([disabled])').not(this).prop('checked', $(this).is(':checked')).change();
-    });
+    var $checkAllcheckbox = $('#checkboxAll');
+        var $checkboxes = $(':checkbox');
+
+        // $checkAllcheckbox.change(function () {
+        //  var newValue = $(this).is(':checked');
+        //  var oldValue = $checkboxes.prop('checked');
+        //  if (newValue != oldValue) {
+        //   $checkboxes.prop('checked', newValue).change();
+        //  }
+        // });
+
+        // $checkboxes.change(function () {
+        //  var newValue = $checkboxes.length == $checkboxes.filter(':checked').length;
+        //  var oldValue = $checkAllcheckbox.prop('checked')
+        //  if (newValue != oldValue) {
+        //   $checkAllcheckbox.prop('checked', newValue).change();
+        //  }
+        // });
+
     $(':input').change(function () {
-      console.log("Changed", this);
+      console.log(i++ + " Changed", this, this.checked);
     });
   });
 </script>

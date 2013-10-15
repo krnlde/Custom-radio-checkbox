@@ -67,6 +67,13 @@
 				<input type="checkbox" name="Checkbox" id="checkbox3" value="3" />
 				<label for="checkbox3">Checkbox 3</label>
 			</p>
+      <br>
+      <br>
+      <br>
+      <p>
+         <input type="checkbox" name="Checkbox" id="checkboxAll" value="All" />
+        <label for="checkboxAll">Check all</label>
+      </p>
 
 			<div class="separator"></div>
 			<p id="submit"><input type="submit" value="Show result" /></p>
@@ -83,3 +90,34 @@
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
 <script src="js/jquery.custom-radio-checkbox.js"></script>
 <script src="js/demo.js"></script>
+
+
+<script>
+  jQuery(function ($) {
+  	var i = 0;
+    var $checkAllcheckbox = $('#checkboxAll');
+    var $checkboxes = $(':checkbox');
+
+    $checkAllcheckbox.change(function () {
+     var newValue = $(this).is(':checked');
+     var oldValue = $checkboxes.prop('checked');
+     if (newValue != oldValue) {
+      $checkboxes.prop('checked', newValue).trigger('change.crc');
+     }
+    });
+
+    $checkboxes.change(function () {
+    	window.setTimeout(function () {
+    		var newValue = $checkboxes.length == $checkboxes.filter(':checked').length;
+    		var oldValue = $checkAllcheckbox.prop('checked');
+    		debugger;
+    		if (newValue != oldValue) {
+    		 $checkAllcheckbox.prop('checked', newValue).trigger('change.crc');
+    		}
+    	}, 4);
+    });
+    $(':input').change(function () {
+      console.log(i++ + " Changed", this, this.checked);
+    });
+  });
+</script>

@@ -29,7 +29,7 @@
 
           // fake input
           fakeInputElem = $('<i>').addClass(type + (input.checked ? ' ' + type + checkedSuffix : '')).on('click.crc', function () {
-            $(this).prev().click();
+            $(this).prev().click().change();
           });
           if (input.disabled) {
             fakeInputElem.addClass('disabled');
